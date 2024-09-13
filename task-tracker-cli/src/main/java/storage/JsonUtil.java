@@ -58,6 +58,15 @@ public class JsonUtil {
         return null;
     }
 
+    public JSONArray getTasksArray() {
+        JSONObject jsonObject = getContent();
+        if (jsonObject == null) {
+            throw new RuntimeException("Failed to get tasks array");
+        }
+
+       return jsonObject.getJSONArray("tasks");
+    }
+
     public void writeJsonObject(JSONObject jsonObject) {
         try (FileWriter fileWriter = new FileWriter(PATH)) {
             fileWriter.write(jsonObject.toString(4));

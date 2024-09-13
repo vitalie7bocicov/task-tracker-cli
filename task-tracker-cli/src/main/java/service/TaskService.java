@@ -6,6 +6,8 @@ import storage.JsonUtil;
 import model.Task;
 import util.TaskConverter;
 
+import java.util.Iterator;
+
 public class TaskService {
     private static TaskService taskService;
     private final JsonUtil jsonUtil;
@@ -31,6 +33,27 @@ public class TaskService {
         Task task = new Task(tasks.length() + 1, description);
         JSONObject taskJson = TaskConverter.taskToJson(task);
         tasks.put(taskJson);
+        jsonObject.put("tasks", tasks);
+        jsonUtil.writeJsonObject(jsonObject);
+    }
+
+    public void deleteTask(int id) {
+
+        JSONObject jsonObject = jsonUtil.getContent();
+        if (jsonObject == null) {
+            return;
+        }
+
+        JSONArray tasks = jsonObject.getJSONArray("tasks");
+
+        for (int i = 0; i < tasks.length(); i++) {
+            JSONObject task = tasks.getJSONObject(i);
+            if (task.getInt("id") == id) {
+                tasks.remove(i);
+                break;
+            }
+        }
+
         jsonObject.put("tasks", tasks);
         jsonUtil.writeJsonObject(jsonObject);
     }

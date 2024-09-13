@@ -13,5 +13,4 @@ public class TaskConverter {
         json.put("updatedAt", task.getUpdatedAt() == null? "null" :task.getUpdatedAt().toString());
         return json;
     }
-
 }

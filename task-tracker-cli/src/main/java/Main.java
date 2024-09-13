@@ -6,6 +6,6 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(args));
         TaskService taskService = TaskService.getInstance();
-        taskService.addTask("code");
+        taskService.deleteTask(2);
     }
 }
