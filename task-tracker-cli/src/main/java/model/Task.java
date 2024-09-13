@@ -1,4 +1,4 @@
-package storage;
+package model;
 
 import java.time.LocalDateTime;
 
@@ -9,11 +9,11 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task(int id, String description, Status status, LocalDateTime createdAt) {
+    public Task(int id, String description) {
         this.id = id;
         this.description = description;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.status = Status.INPROGRESS;
+        this.createdAt = LocalDateTime.now();
     }
 
     public int getId() {

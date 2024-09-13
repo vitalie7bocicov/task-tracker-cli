@@ -28,15 +28,15 @@ public class JsonUtil {
     }
 
     private boolean initJsonFile() {
-            try {
-                if (jsonFile.createNewFile()) {
-                    System.out.println("json file created.");
-                }
-            } catch (IOException e) {
-                System.out.println("An error occurred when creating the json file");
-                e.printStackTrace();
-                return false;
+        try {
+            if (jsonFile.createNewFile()) {
+                System.out.println("json file created.");
             }
+        } catch (IOException e) {
+            System.out.println("An error occurred when creating the json file");
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
