@@ -1,78 +1,68 @@
 package storage;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import model.Task;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.*;
 
 public class JsonUtil {
-    private static JsonUtil jsonUtil;
     private final String PATH = "tasks.json";
     private final File jsonFile = new File(PATH);
 
-    private JsonUtil(){
+    public JsonUtil(){
         if (!jsonFile.exists()) {
             if (!initJsonFile()) {
-                System.out.println("Failed to init json file");
-                System.exit(0);
+                throw new RuntimeException("Failed to create json file");
             }
-            JSONObject jsonObject = new JSONObject();
-            JSONArray tasks = new JSONArray();
-            jsonObject.put("tasks", tasks);
-            writeJsonObject(jsonObject);
+            System.out.println("File created successful");
         }
+    }
+
+    
+    public void saveTask(Task task) {
+        String jsonTask = getJsonFromObject(task);
+        try (FileWriter fw = new FileWriter(jsonFile)) {
+            fw.write(jsonTask);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private List<Task> loadTasks() {
+        List<Task> tasks = new ArrayList<>();
+        try (BufferedReader br = Files.newBufferedReader(jsonFile.toPath())) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return tasks;
     }
 
     private boolean initJsonFile() {
+        boolean isFileCreated;
         try {
-            if (jsonFile.createNewFile()) {
-                System.out.println("json file created.");
-            }
+            isFileCreated = jsonFile.createNewFile();
         } catch (IOException e) {
-            System.out.println("An error occurred when creating the json file");
-            e.printStackTrace();
+            System.out.println(e);
             return false;
         }
-        return true;
+        return isFileCreated;
     }
 
-    public static JsonUtil getInstance() {
-        if (jsonUtil == null) {
-            jsonUtil = new JsonUtil();
-        }
-        return jsonUtil;
-    }
-
-    public JSONObject getContent() {
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(PATH)));
-            return new JSONObject(content);
-        } catch (IOException e) {
-            System.out.println("Failed to read json file content");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public JSONArray getTasksArray() {
-        JSONObject jsonObject = getContent();
-        if (jsonObject == null) {
-            throw new RuntimeException("Failed to get tasks array");
-        }
-
-       return jsonObject.getJSONArray("tasks");
-    }
-
-    public void writeJsonObject(JSONObject jsonObject) {
-        try (FileWriter fileWriter = new FileWriter(PATH)) {
-            fileWriter.write(jsonObject.toString(4));
-        } catch (IOException e) {
-            System.out.println("Failed to write json object to file");
-            e.printStackTrace();
-        }
+    private String getJsonFromObject(Task task) {
+        return "{\n" +
+                "  \"id\": \"" + task.getId() + "\", \n" +
+                "  \"description\": \"" + task.getDescription() + "\", \n" +
+                "  \"status\": \"" + task.getStatus() + "\", \n" +
+                "  \"createdAt\": \"" + task.getCreatedAt() + "\", \n" +
+                "  \"updatedAt\": \"" + task.getUpdatedAt() + "\" \n" +
+                "}";
     }
 }

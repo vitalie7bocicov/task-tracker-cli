@@ -12,11 +12,15 @@ public class Task {
     public Task(int id, String description) {
         this.id = id;
         this.description = description;
-        this.status = Status.PROGRESS;
+        this.status = Status.TODO;
         this.createdAt = LocalDateTime.now();
     }
 
-    public Task(int id, String description, Status status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Task(int id,
+                String description,
+                Status status,
+                LocalDateTime createdAt,
+                LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.status = status;
