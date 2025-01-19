@@ -1,16 +1,7 @@
-{"tasks": [
-    {
-        "createdAt": "2024-09-13T13:07:15.917984400",
-        "description": "play monopoly",
-        "id": 3,
-        "status": "PROGRESS",
-        "updatedAt": "2024-09-14T20:32:37.103569100"
-    },
-    {
-        "createdAt": "2024-09-13T13:07:15.921988",
-        "description": "hello",
-        "id": 4,
-        "status": "PROGRESS",
-        "updatedAt": "null"
-    }
-]}
+{
+  "id": "1", 
+  "description": "Buy groceries", 
+  "status": "TODO", 
+  "createdAt": "2025-01-19T20:20:06.936180100", 
+  "updatedAt": "null" 
+}
