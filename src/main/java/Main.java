@@ -15,7 +15,7 @@ public class Main {
                 if (args.length != 2) {
                     throw new IllegalArgumentException("Please add the description of the task");
                 }
-                taskService.add(args[1]);
+//                taskService.add(args[1]);
             }
             default -> {
                 System.out.println("INVALID OPERATION");

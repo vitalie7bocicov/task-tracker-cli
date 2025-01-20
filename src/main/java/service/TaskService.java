@@ -9,7 +9,6 @@ import java.util.List;
 public class TaskService {
     private static TaskService taskService;
     private final JsonUtil jsonUtil;
-    List<Task> tasks = new ArrayList<>();
 
     private TaskService(JsonUtil jsonUtil){
         this.jsonUtil = jsonUtil;
@@ -23,7 +22,7 @@ public class TaskService {
     }
 
     public void add(String description) {
-        Task task = new Task(1, description);
+        Task task = new Task(description);
         jsonUtil.saveTask(task);
     }
 

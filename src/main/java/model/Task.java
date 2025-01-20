@@ -9,6 +9,16 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public Task() {
+
+    }
+
+    public Task(String description) {
+        this.description = description;
+        this.status = Status.TODO;
+        this.createdAt = LocalDateTime.now();
+    }
+
     public Task(int id, String description) {
         this.id = id;
         this.description = description;
