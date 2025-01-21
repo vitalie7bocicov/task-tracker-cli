@@ -29,16 +29,34 @@ public class JsonUtil {
     }
 
     public void saveTask(Task task) {
-        String jsonTask = getJsonFromObject(task);
+        task.setId(tasks.size());
+        tasks.put(task.getId(), task);
+        saveTasks();
+    }
+
+    private void saveTasks() {
         try (FileWriter fw = new FileWriter(jsonFile)) {
-            fw.write(jsonTask);
+            int countTask = 0;
+            fw.write("[\n");
+            for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+                try {
+                    ++countTask;
+                    fw.write(getJsonFromObject(entry.getValue()));
+                    if (countTask == tasks.size()) {
+                        continue;
+                    }
+                    fw.write(",\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            fw.write("\n]");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void loadTasks() {
-        System.out.println("Loading tasks");
         List<String> taskStrings = extractTaskStringsFromFile();
         for (String taskObj : taskStrings) {
             System.out.println(taskObj);
@@ -76,7 +94,6 @@ public class JsonUtil {
                 tasks.put(task.getId(), task);
             }
         }
-        tasks.forEach((key, value) -> System.out.println(value));
     }
 
     private List<String> extractTaskStringsFromFile() {
