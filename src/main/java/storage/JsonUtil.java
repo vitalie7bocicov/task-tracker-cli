@@ -28,13 +28,19 @@ public class JsonUtil {
         loadTasks();
     }
 
-    public void saveTask(Task task) {
-        task.setId(tasks.size());
-        tasks.put(task.getId(), task);
+    public int saveTask(Task task) {
+        int id = tasks.size();
+        task.setId(id);
+        tasks.put(id, task);
         saveTasks();
+        return id;
     }
 
-    private void saveTasks() {
+    public Map<Integer, Task> getTasks() {
+        return this.tasks;
+    }
+
+    public void saveTasks() {
         try (FileWriter fw = new FileWriter(jsonFile)) {
             int countTask = 0;
             fw.write("[\n");
@@ -59,7 +65,6 @@ public class JsonUtil {
     private void loadTasks() {
         List<String> taskStrings = extractTaskStringsFromFile();
         for (String taskObj : taskStrings) {
-            System.out.println(taskObj);
             Task task = new Task();
             Pattern pattern = Pattern.compile("\"(.*?)\"\\s*:\\s*\"(.*?)\",?");
             Matcher matcher = pattern.matcher(taskObj);

@@ -17,6 +17,13 @@ public class Main {
                 }
                 taskService.add(args[1]);
             }
+            case UPDATE -> {
+                if (args.length != 3) {
+                    throw new IllegalArgumentException("Please add the description of the task");
+                }
+                int id = Integer.parseInt(args[1]);
+                taskService.update(id, args[2]);
+            }
             default -> {
                 System.out.println("INVALID OPERATION");
             }
