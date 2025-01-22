@@ -1,5 +1,7 @@
 package service;
 
+import model.Operation;
+import model.Status;
 import model.Task;
 import storage.JsonUtil;
 
@@ -27,6 +29,11 @@ public class TaskService {
     }
 
     public void list() {
+        jsonUtil.getTasks().forEach(
+                (id, task) -> {
+                    System.out.println(task);
+                }
+        );
     }
 
     public void update(int id, String newDesc) {
@@ -38,6 +45,13 @@ public class TaskService {
 
     public void delete(int id) {
         jsonUtil.getTasks().remove(id);
+        jsonUtil.saveTasks();
+    }
+
+    public void markStatus(int id, Status status) {
+        Task task = jsonUtil.getTasks().get(id);
+        task.setStatus(status);
+        task.setUpdatedAt(LocalDateTime.now());
         jsonUtil.saveTasks();
     }
 }

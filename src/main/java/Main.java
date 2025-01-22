@@ -1,4 +1,5 @@
 import model.Operation;
+import model.Status;
 import service.TaskService;
 import java.util.Arrays;
 
@@ -9,7 +10,7 @@ public class Main {
         if (args.length < 1) {
             throw new IllegalArgumentException("You must provide an operation");
         }
-        Operation op = Operation.valueOf(args[0].toUpperCase());
+        Operation op = Operation.getOperation(args[0].toUpperCase());
         switch (op) {
             case ADD -> {
                 if (args.length != 2) {
@@ -30,6 +31,26 @@ public class Main {
                 }
                 int id = Integer.parseInt(args[1]);
                 taskService.delete(id);
+            }
+            case MARK_IN_PROGRESS -> {
+                if (args.length != 2) {
+                    throw new IllegalArgumentException("Invalid arguments");
+                }
+                int id = Integer.parseInt(args[1]);
+                taskService.markStatus(id, Status.PROGRESS);
+            }
+            case MARK_DONE -> {
+                if (args.length != 2) {
+                    throw new IllegalArgumentException("Invalid arguments");
+                }
+                int id = Integer.parseInt(args[1]);
+                taskService.markStatus(id, Status.DONE);
+            }
+            case LIST -> {
+                if (args.length != 1) {
+                    throw new IllegalArgumentException("Invalid arguments");
+                }
+                taskService.list();
             }
             default -> {
                 System.out.println("INVALID OPERATION");
