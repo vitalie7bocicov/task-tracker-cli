@@ -35,4 +35,9 @@ public class TaskService {
         task.setUpdatedAt(LocalDateTime.now());
         jsonUtil.saveTasks();
     }
+
+    public void delete(int id) {
+        jsonUtil.getTasks().remove(id);
+        jsonUtil.saveTasks();
+    }
 }

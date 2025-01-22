@@ -33,19 +33,5 @@
   "status": "TODO", 
   "createdAt": "2025-01-21T21:01:41.269256400", 
   "updatedAt": "null" 
-},
-{
-  "id": "5", 
-  "description": "Buy groceries", 
-  "status": "TODO", 
-  "createdAt": "2025-01-21T21:01:59.480565200", 
-  "updatedAt": "null" 
-},
-{
-  "id": "6", 
-  "description": "Buy groceries", 
-  "status": "TODO", 
-  "createdAt": "2025-01-21T21:05:21.945384300", 
-  "updatedAt": "null" 
 }
 ]

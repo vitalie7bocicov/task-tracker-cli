@@ -19,10 +19,17 @@ public class Main {
             }
             case UPDATE -> {
                 if (args.length != 3) {
-                    throw new IllegalArgumentException("Please add the description of the task");
+                    throw new IllegalArgumentException("Please provide the id and updated description");
                 }
                 int id = Integer.parseInt(args[1]);
                 taskService.update(id, args[2]);
+            }
+            case DELETE -> {
+                if (args.length != 2) {
+                    throw new IllegalArgumentException("Invalid arguments");
+                }
+                int id = Integer.parseInt(args[1]);
+                taskService.delete(id);
             }
             default -> {
                 System.out.println("INVALID OPERATION");
