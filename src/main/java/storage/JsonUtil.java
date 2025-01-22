@@ -15,6 +15,7 @@ public class JsonUtil {
     private final String PATH = "tasks.json";
     private final File jsonFile = new File(PATH);
     private Map<Integer, Task> tasks = new HashMap<>();
+    private int maxId = 0;
 
     public JsonUtil(){
         if (!jsonFile.exists()) {
@@ -29,7 +30,7 @@ public class JsonUtil {
     }
 
     public int saveTask(Task task) {
-        int id = tasks.size();
+        int id = ++maxId;
         task.setId(id);
         tasks.put(id, task);
         saveTasks();
@@ -73,7 +74,11 @@ public class JsonUtil {
                 String value = matcher.group(2);
                 switch (key) {
                     case "id" -> {
-                        task.setId(Integer.parseInt(value));
+                        int id = Integer.parseInt(value);
+                        task.setId(id);
+                        if (id > maxId) {
+                            maxId = id;
+                        }
                     }
                     case "description" -> {
                         task.setDescription(value);
