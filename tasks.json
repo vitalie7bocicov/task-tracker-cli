@@ -2,9 +2,9 @@
 {
   "id": "0", 
   "description": "Buy groceries", 
-  "status": "TODO", 
+  "status": "PROGRESS", 
   "createdAt": "2025-01-20T20:41:16.326232700", 
-  "updatedAt": "null" 
+  "updatedAt": "2025-01-23T20:46:23.564662500" 
 },
 {
   "id": "2", 

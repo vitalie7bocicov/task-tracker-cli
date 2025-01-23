@@ -36,8 +36,21 @@ public class TaskService {
         );
     }
 
+    public void listByStatus(Status status) {
+        jsonUtil.getTasks().entrySet()
+                .stream()
+                .filter(entry ->
+                    entry.getValue().getStatus() == status)
+                .forEach((entry) -> {
+                    System.out.println(entry.getValue());
+                });
+    }
+
     public void update(int id, String newDesc) {
         Task task = jsonUtil.getTasks().get(id);
+        if (task == null) {
+            throw new RuntimeException("Task with this id does not exit");
+        }
         task.setDescription(newDesc);
         task.setUpdatedAt(LocalDateTime.now());
         jsonUtil.saveTasks();
@@ -50,6 +63,9 @@ public class TaskService {
 
     public void markStatus(int id, Status status) {
         Task task = jsonUtil.getTasks().get(id);
+        if (task == null) {
+            throw new RuntimeException("Task with this id does not exit");
+        }
         task.setStatus(status);
         task.setUpdatedAt(LocalDateTime.now());
         jsonUtil.saveTasks();
