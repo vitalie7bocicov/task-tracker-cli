@@ -6,7 +6,6 @@ import com.vitaliebocicov.task_tracker_cli.service.TaskService;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("HELLO");
         TaskRepository repository = new TaskRepository();
         App app = new App(new TaskService(repository));
         try {
