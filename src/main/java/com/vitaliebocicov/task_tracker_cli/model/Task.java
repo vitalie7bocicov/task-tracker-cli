@@ -1,4 +1,4 @@
-package model;
+package com.vitaliebocicov.task_tracker_cli.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,11 +10,10 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task() {
-
-    }
+    public Task() { }
 
     public Task(String description) {
+        this.id = -1;
         this.description = description;
         this.status = Status.TODO;
         this.createdAt = LocalDateTime.now();

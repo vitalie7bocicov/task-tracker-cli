@@ -1,11 +1,10 @@
-package storage;
+package com.vitaliebocicov.task_tracker_cli.util;
 
-import model.Status;
-import model.Task;
+import com.vitaliebocicov.task_tracker_cli.model.Status;
+import com.vitaliebocicov.task_tracker_cli.model.Task;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -14,8 +13,6 @@ import java.util.regex.Pattern;
 public class JsonUtil {
     private final String PATH = "tasks.json";
     private final File jsonFile = new File(PATH);
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private int maxId = 0;
 
     public JsonUtil(){
         if (!jsonFile.exists()) {
@@ -23,32 +20,17 @@ public class JsonUtil {
                 throw new RuntimeException("Failed to create json file");
             }
             System.out.println("File created successful");
-            return;
         }
-        // load tasks from file
-        loadTasks();
     }
 
-    public int saveTask(Task task) {
-        int id = ++maxId;
-        task.setId(id);
-        tasks.put(id, task);
-        saveTasks();
-        return id;
-    }
-
-    public Map<Integer, Task> getTasks() {
-        return this.tasks;
-    }
-
-    public void saveTasks() {
+    public void saveTasks(List<Task> tasks) {
         try (FileWriter fw = new FileWriter(jsonFile)) {
             int countTask = 0;
             fw.write("[\n");
-            for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            for (var task : tasks) {
                 try {
                     ++countTask;
-                    fw.write(getJsonFromObject(entry.getValue()));
+                    fw.write(getJsonFromObject(task));
                     if (countTask == tasks.size()) {
                         continue;
                     }
@@ -63,7 +45,8 @@ public class JsonUtil {
         }
     }
 
-    private void loadTasks() {
+    public Map<Integer, Task> loadTasks() {
+        Map<Integer, Task> tasks = new HashMap<>();
         List<String> taskStrings = extractTaskStringsFromFile();
         for (String taskObj : taskStrings) {
             Task task = new Task();
@@ -76,9 +59,6 @@ public class JsonUtil {
                     case "id" -> {
                         int id = Integer.parseInt(value);
                         task.setId(id);
-                        if (id > maxId) {
-                            maxId = id;
-                        }
                     }
                     case "description" -> {
                         task.setDescription(value);
@@ -104,6 +84,24 @@ public class JsonUtil {
                 tasks.put(task.getId(), task);
             }
         }
+        return tasks;
+    }
+
+    private boolean initJsonFile() {
+        boolean initStatus;
+        try {
+            initStatus = jsonFile.createNewFile();
+            if (!initStatus) {
+                return false;
+            }
+            FileWriter fw = new FileWriter(jsonFile);
+            fw.write("[]\n");
+            fw.close();
+        } catch (IOException e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
     }
 
     private List<String> extractTaskStringsFromFile() {
@@ -138,23 +136,6 @@ public class JsonUtil {
             throw new RuntimeException(e);
         }
         return taskStrings;
-    }
-
-    private boolean initJsonFile() {
-        boolean initStatus;
-        try {
-            initStatus = jsonFile.createNewFile();
-            if (!initStatus) {
-                return false;
-            }
-            FileWriter fw = new FileWriter(jsonFile);
-            fw.write("[]\n");
-            fw.close();
-        } catch (IOException e) {
-            System.out.println(e);
-            return false;
-        }
-        return initStatus;
     }
 
     private String getJsonFromObject(Task task) {

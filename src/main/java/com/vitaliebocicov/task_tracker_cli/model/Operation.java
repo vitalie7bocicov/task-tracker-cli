@@ -1,4 +1,4 @@
-package model;
+package com.vitaliebocicov.task_tracker_cli.model;
 
 public enum Operation {
     ADD, UPDATE, DELETE, MARK_IN_PROGRESS, MARK_DONE, LIST, LIST_TODO, LIST_PROGRESS, LIST_DONE ;
