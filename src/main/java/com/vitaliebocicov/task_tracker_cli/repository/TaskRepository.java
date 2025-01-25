@@ -18,7 +18,11 @@ public class TaskRepository {
     public TaskRepository() {
         this.jsonUtil = new JsonUtil();
         this.tasks = jsonUtil.loadTasks();
-        this.maxId = Collections.max(tasks.keySet());
+        if (tasks.isEmpty()) {
+            this.maxId = 0;
+        } else {
+            this.maxId = Collections.max(tasks.keySet());
+        }
     }
 
     public Task save(Task task) {

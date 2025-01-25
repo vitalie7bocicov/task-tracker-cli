@@ -5,6 +5,7 @@ import com.vitaliebocicov.task_tracker_cli.model.Task;
 import com.vitaliebocicov.task_tracker_cli.repository.TaskRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class TaskService {
 
@@ -17,7 +18,7 @@ public class TaskService {
     public void add(String description) {
         Task task = new Task(description);
         Task savedTask = repository.save(task);
-        System.out.printf("Task added successfully (ID: %d)", savedTask.getId());
+        System.out.println("Task added successfully (ID: " + savedTask.getId() + ")");
     }
 
     public void list() {
@@ -25,11 +26,15 @@ public class TaskService {
     }
 
     public void listByStatus(Status status) {
-        repository.getTasks()
-                    .stream()
-                    .filter(task ->
-                        task.getStatus() == status)
-                .forEach(System.out::println);
+        List<Task> filteredTasks = repository.getTasks().stream()
+                .filter(task -> task.getStatus() == status)
+                .toList();
+
+        if (filteredTasks.isEmpty()) {
+            System.out.println("No tasks found with status: " + status);
+        } else {
+            filteredTasks.forEach(System.out::println);
+        }
     }
 
     public void updateDescription(int id, String newDesc) {

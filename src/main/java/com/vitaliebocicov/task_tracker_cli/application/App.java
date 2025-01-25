@@ -24,18 +24,22 @@ public class App {
             case UPDATE -> {
                 int id = Integer.parseInt(args[1]);
                 taskService.updateDescription(id, args[2]);
+                System.out.println("Task with id " + id + " was updated.");
             }
             case DELETE -> {
                 int id = Integer.parseInt(args[1]);
                 taskService.delete(id);
+                System.out.println("Task with id " + id + " was deleted.");
             }
             case MARK_IN_PROGRESS -> {
                 int id = Integer.parseInt(args[1]);
                 taskService.markStatus(id, Status.PROGRESS);
+                System.out.println("Task with id " + id + " was marked in progress.");
             }
             case MARK_DONE -> {
                 int id = Integer.parseInt(args[1]);
                 taskService.markStatus(id, Status.DONE);
+                System.out.println("Task with id " + id + " was marked as done.");
             }
             case LIST -> {
                 if (args.length == 1) {
