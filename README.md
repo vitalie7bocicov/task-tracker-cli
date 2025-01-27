@@ -23,18 +23,26 @@ Each task includes the following properties:
 
 ## Installation
 
-Ensure you have Java installed. Then, run the application as follows:
+### Prerequisites
+
+Ensure you have **Java 21** installed. You can check your Java version by running:
 
 ```sh
-./task-cli add "Do 10 push-ups"
+java -version
 ```
 
 ## Usage
 
 The CLI accepts commands in the following format:
 
+On Linux or macOS:
 ```sh
 ./task-cli [command] [arguments]
+```
+
+On Windows:
+```sh
+./task-cli.bat [command] [arguments]
 ```
 
 ### Adding a Task

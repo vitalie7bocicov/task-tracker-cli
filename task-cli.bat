@@ -1,0 +1,3 @@
+@echo off
+java -cp out com.vitaliebocicov.task_tracker_cli.Main %*
+
