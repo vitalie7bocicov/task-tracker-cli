@@ -74,10 +74,10 @@ On Windows:
 ### Listing Tasks
 
 ```sh
-./task-cli list        # Lists all tasks
-./task-cli list done  # Lists completed tasks
-./task-cli list todo  # Lists pending tasks
+./task-cli list              # Lists all tasks
+./task-cli list todo         # Lists pending tasks
 ./task-cli list in-progress  # Lists tasks in progress
+./task-cli list done         # Lists completed tasks
 ```
 
 ## Implementation Details
